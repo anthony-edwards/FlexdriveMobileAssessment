@@ -9,8 +9,8 @@
 import React, { Component } from "react";
 import { ApolloProvider } from "react-apollo";
 import { client } from "./Client";
-import { Provider } from "react-redux";
-import store from "./redux/store";
+// import { Provider } from "react-redux";
+// import store from "./redux/store";
 import { createStackNavigator, createAppContainer } from "react-navigation";
 import FlexDriveHeader from "./components/Layouts/Header";
 import VehiclesPage from "./components/Vehicles/Vehicles";
@@ -32,9 +32,7 @@ Router = createAppContainer(Router);
 
 //Stateless components are better :)
 export default (App = () => (
-  <Provider store={store}>
     <ApolloProvider client={client}>
       <Router />
     </ApolloProvider>
-  </Provider>
 ));
