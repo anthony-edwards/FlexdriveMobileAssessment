@@ -10,6 +10,8 @@ import { ScrollView } from "react-native-gesture-handler";
 const priceFormatter = (n, currency)=>{
   return currency + n.toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g, "$1,");
 }
+const cleanString = text =>
+  text ? text.toString().replace(/[^A-Za-z0-9 ]/g, "") : "";
 const CarTitle = styled.Text`
   font-size: 16;
   font-weight: bold
@@ -176,7 +178,7 @@ const Vehicles = props => {
                             <View>
                               <View>
                                 <CarTitle>
-                                  {`${year} ${make} ${model} ${trim}`}
+                                  {`${cleanString(year)} ${cleanString(make)} ${cleanString(model)} ${cleanString(trim)}`}
                                 </CarTitle>
                               </View>
                               <View>
