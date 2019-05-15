@@ -1,7 +1,7 @@
-import React, { Component } from "react";
-import { Platform, StyleSheet, Text, View } from "react-native";
+import React from "react";
+import { StyleSheet, Text, View } from "react-native";
 import { Icon, Header, Button } from "react-native-elements";
-import { connect } from "react-redux";
+
 const FlexDriveHeader = props => (
   <View>
     <Header
@@ -12,6 +12,7 @@ const FlexDriveHeader = props => (
     />
   </View>
 );
+
 const HeaderLeftComponent = (props) => {
   const { navigate } = props.navigation;
   return (
@@ -45,7 +46,7 @@ const HeaderCenterComponent = props => (
       }}
     >
       <View>
-        <Text style={{marginRight: 5}}>{props.vehicles.count}</Text>
+        <Text style={{marginRight: 5}}>100</Text>
       </View>
       <View>
         <Text>Cars Found</Text>
@@ -101,15 +102,4 @@ const styles = StyleSheet.create({
   }
 });
 
-const mapStateToProps = (state) => ({
-  vehicles: state.vehicles
-});
-
-const mapDispatchToProps = (dispatch, props) => ({
-  setCount: (data) => dispatch({type: 'SET_COUNT', data })
-});
-
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(FlexDriveHeader);
+export default FlexDriveHeader;
