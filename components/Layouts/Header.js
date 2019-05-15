@@ -1,6 +1,7 @@
 import React from "react";
 import { StyleSheet, Text, View } from "react-native";
 import { Icon, Header, Button } from "react-native-elements";
+import Count from "../Vehicles/Count";
 
 const FlexDriveHeader = props => (
   <View>
@@ -46,7 +47,9 @@ const HeaderCenterComponent = props => (
       }}
     >
       <View>
-        <Text style={{marginRight: 5}}>100</Text>
+        <Text style={{marginRight: 5}}>
+          <Count/>
+        </Text>
       </View>
       <View>
         <Text>Cars Found</Text>

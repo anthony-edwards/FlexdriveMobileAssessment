@@ -15,7 +15,7 @@ const Count = () => (
         if (error) return;
         return (
           <>
-            <Text></Text>
+            <Text>{data.count}</Text>
           </>
         );
       }}

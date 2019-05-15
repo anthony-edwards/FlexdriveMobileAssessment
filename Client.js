@@ -51,7 +51,11 @@ client
     query
   })
   .then(result => {
-    return;
+    cache.writeData({
+      data: {
+        count: result.data.vehicles.totalCount
+      }
+    });
   });
 
 export {client}
