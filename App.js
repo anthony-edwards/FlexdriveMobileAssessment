@@ -33,6 +33,6 @@ Router = createAppContainer(Router);
 //Stateless components are better :)
 export default (App = () => (
     <ApolloProvider client={client}>
-      <Router />
+      <Router client={client}/>
     </ApolloProvider>
 ));

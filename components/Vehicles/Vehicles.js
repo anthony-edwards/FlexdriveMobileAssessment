@@ -1,10 +1,12 @@
 import React, { Component, useState } from "react";
 import { Query } from "react-apollo";
 import { gql } from "apollo-boost";
-import { Text, View } from "react-native";
+import { Text, View, ActivityIndicator } from "react-native";
 import styled from "styled-components";
-import { Header, Button, Icon } from "react-native-elements";
+import { Button, Icon } from "react-native-elements";
 import PageHeader from "../Layouts/Header";
+import Count from "./Count";
+import { ScrollView } from "react-native-gesture-handler";
 const LoadContainer = styled.View`
   flex: 1;
   text-align: center;
@@ -50,12 +52,13 @@ const GET_RATES = gql`
   }
 `;
 
-const Vehicles = (props)=>{
-    const [banner, setBanner] = useState(true);
-    return (
-      <>
-        <PageHeader {...props} />
-        {banner && <Button
+const Vehicles = props => {
+  const [banner, setBanner] = useState(true);
+  return (
+    <>
+      <PageHeader {...props} />
+      {banner && (
+        <Button
           onPress={() => navigate("Landing")}
           color="black"
           type="clear"
@@ -63,7 +66,7 @@ const Vehicles = (props)=>{
           titleStyle={{
             color: "white",
             fontSize: 12,
-            marginRight: 10,
+            marginRight: 10
           }}
           iconRight={true}
           buttonStyle={{
@@ -79,34 +82,50 @@ const Vehicles = (props)=>{
               color="white"
             />
           }
-          onPress={()=>setBanner(false)}
-        />}
+          onPress={() => setBanner(false)}
+        />
+      )}
 
-        <Query query={GET_RATES}>
-          {({ loading, error, data }) => {
-            if (loading)
-              return (
-                <LoadContainer>
-                  <Text>Loading...</Text>
-                </LoadContainer>
-              );
-            if (error)
-              return (
-                <Container>
-                  <Text>Error:</Text>
-                </Container>
-              );
+      <Query query={GET_RATES}>
+        {({ loading, error, data, client }) => {
+          if (loading)
             return (
-              <>
-                <Container>
-                  <Text>Test</Text>
-                </Container>
-              </>
+              <LoadContainer>
+                <ActivityIndicator size="large" />
+              </LoadContainer>
             );
-          }}
-        </Query>
-      </>
-    );
-  }
+          if (error) return;
+          console.log(data);
+          const {vehicles} = data
+          return (
+            <>
+              <ScrollView>
+                {vehicles.edges.map(car => {
+                  return (
+                    <View key={car.node.id}>
+                      <View>
+                        <Text>{car.node.make}</Text>
+                      </View>
+                      <View>
+                        <Text>{car.node.model}</Text>
+                      </View>
+                      <View>
+                        <Text>{car.node.year}</Text>
+                      </View>
+                      <View>
+                        <Text>{car.node.trim}</Text>
+                      </View>
+                    </View>
+                  );
+                })}
+              </ScrollView>
+            </>
+          );
+        }}
+      </Query>
+      <Count />
+    </>
+  );
+};
 
 export default Vehicles;
