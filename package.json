@@ -14,12 +14,14 @@
     "react-native": "0.59.8",
     "react-native-elements": "^1.1.0",
     "react-native-fontawesome": "^6.0.1",
-    "react-native-vector-icons": "^6.4.2"
+    "react-native-vector-icons": "^6.4.2",
+    "react-redux": "^7.0.3",
+    "redux": "^4.0.1",
+    "styled-components": "^4.2.0"
   },
   "devDependencies": {
     "@babel/core": "^7.4.4",
     "@babel/runtime": "^7.4.4",
-    "@fortawesome/fontawesome-free": "^5.8.2",
     "babel-jest": "^24.8.0",
     "jest": "^24.8.0",
     "metro-react-native-babel-preset": "^0.54.0",

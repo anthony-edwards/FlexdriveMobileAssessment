@@ -1,20 +1,17 @@
 import React, { Component } from "react";
 import { Platform, StyleSheet, Text, View } from "react-native";
 import { Icon, Header, Button } from "react-native-elements";
-export default class FlexDriveHeader extends Component<Props> {
-  render() {
-    return (
-      <View>
-        <Header
-          leftComponent={<HeaderLeftComponent />}
-          centerComponent={<HeaderCenterComponent />}
-          rightComponent={<HeaderRightComponent />}
-          backgroundColor={"white"}
-        />
-      </View>
-    );
-  }
-}
+import { connect } from "react-redux";
+const FlexDriveHeader = props => (
+  <View>
+    <Header
+      leftComponent={<HeaderLeftComponent {...props} />}
+      centerComponent={<HeaderCenterComponent {...props} />}
+      rightComponent={<HeaderRightComponent {...props}/>}
+      backgroundColor={"white"}
+    />
+  </View>
+);
 const HeaderLeftComponent = () => (
   <>
     <Button
@@ -30,15 +27,27 @@ const HeaderLeftComponent = () => (
   </>
 );
 
-// onPress = {() => console.log('hello')}
-const HeaderCenterComponent = () => (
+const HeaderCenterComponent = props => (
   <>
-    <Text>Cars Found</Text>
     <View
       style={{
         flex: 1,
         flexDirection: "row",
-        justifyContent: "space-between",
+        justifyContent: "space-between"
+      }}
+    >
+      <View>
+        <Text style={{marginRight: 5}}>{props.vehicles.count}</Text>
+      </View>
+      <View>
+        <Text>Cars Found</Text>
+      </View>
+    </View>
+    <View
+      style={{
+        flex: 1,
+        flexDirection: "row",
+        justifyContent: "space-between"
       }}
     >
       <View>
@@ -50,13 +59,13 @@ const HeaderCenterComponent = () => (
         />
       </View>
       <View>
-        <Text style={{marginLeft: 5}}>Atlanta, GA</Text>
+        <Text style={{ marginLeft: 5 }}>Atlanta, GA</Text>
       </View>
     </View>
   </>
 );
 
-const HeaderRightComponent = () => (
+const HeaderRightComponent = (props) => (
   <>
     <Button
       color="black"
@@ -68,6 +77,8 @@ const HeaderRightComponent = () => (
       icon={<Icon name="sliders" type="font-awesome" size={15} color="black" />}
       title="Filters"
       titleStyle={{ color: "black", marginLeft: 10, fontSize: 14 }}
+      // onPress={(e)=>
+      // }
     />
   </>
 );
@@ -80,3 +91,16 @@ const styles = StyleSheet.create({
     marginLeft: 15
   }
 });
+
+const mapStateToProps = (state) => ({
+  vehicles: state.vehicles
+});
+
+const mapDispatchToProps = (dispatch, props) => ({
+  setCount: (data) => dispatch({type: 'SET_COUNT', data })
+});
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(FlexDriveHeader);
