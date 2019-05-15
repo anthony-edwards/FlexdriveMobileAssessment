@@ -50,6 +50,13 @@ const Price = styled.Text`
   color: white;
   font-size: 16;
   font-weight: bold;
+  text-align: center;
+`;
+const Time = styled.Text`
+  color: lavender;
+  font-size: 10;
+  font-weight: bold;
+  text-align: center;
 `;
 const CarDescription = styled.View`
   display: flex;
@@ -189,6 +196,9 @@ const Vehicles = props => {
                                   )[0].value, '$')
                                 }
                               </Price>
+                              <Time>
+                                {`FOR ${car.node.pricing[0].duration} DAYS`}
+                              </Time>
                             </View>
                           </CarPrice>
                         </CarDetails>
