@@ -43,7 +43,6 @@ const client = new ApolloClient({
 cache.writeData({
   data: {
     count: 0,
-    vehicles: {}
   }
 });
 client
@@ -57,5 +56,4 @@ client
       }
     });
   });
-
 export {client}

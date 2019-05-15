@@ -7,6 +7,17 @@ import { Button, Icon, Image, Divider } from "react-native-elements";
 import PageHeader from "../Layouts/Header";
 import Count from "./Count";
 import { ScrollView } from "react-native-gesture-handler";
+const priceFormatter = (n, currency)=>{
+  return currency + n.toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g, "$1,");
+}
+const CarTitle = styled.Text`
+  font-size: 16;
+  font-weight: bold
+`
+const CarLocation = styled.Text`
+  font-size: 14;
+  color: grey;
+`
 const LoadContainer = styled.View`
   flex: 1;
   text-align: center;
@@ -18,6 +29,32 @@ const Container = styled.View`
   text-align: center;
   justify-content: center;
   align-self: center;
+`;
+const CarDetails = styled.View`
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  margin-top: 15;
+`;
+const CarPrice = styled.View`
+  background-color: purple;
+  align-self: flex-start;
+  justify-content: center;
+  padding-top: 10;
+  padding-bottom: 10;
+  padding-left: 10;
+  padding-right: 10;
+  border-radius: 5;
+`;
+const Price = styled.Text`
+  color: white;
+  font-size: 16;
+  font-weight: bold;
+`;
+const CarDescription = styled.View`
+  display: flex;
+  flex-direction: row;
+  width: 65%;
 `;
 const CarContainer = styled.View`
   margin-top:30;
@@ -107,34 +144,56 @@ const Vehicles = props => {
             <>
               <ScrollView>
                 {vehicles.edges.map(car => {
+                  let {year, make, model, trim} = car.node
                   return (
                     <View key={car.node.id}>
-                    <CarContainer key={car.node.id}>
-                      {car.node.featureImage &&
-                        <View>
-                        <Image
-                          source={{ uri: car.node.featureImage.url }}
-                          style={{ width: '100%', height: 200 }}
-                          PlaceholderContent={
-                            <ActivityIndicator />
-                          }
-                        />
-                      </View>
-                      }
-                      <View>
-                        <Text>{car.node.make}</Text>
-                      </View>
-                      <View>
-                        <Text>{car.node.model}</Text>
-                      </View>
-                      <View>
-                        <Text>{car.node.year}</Text>
-                      </View>
-                      <View>
-                        <Text>{car.node.trim}</Text>
-                      </View>
-                    </CarContainer>
-                    <Divider/>
+                      <CarContainer key={car.node.id}>
+                        {car.node.featureImage && (
+                          <View>
+                            <Image
+                              source={{
+                                uri: car.node.featureImage.url
+                              }}
+                              style={{
+                                width: "100%",
+                                height: 200
+                              }}
+                              PlaceholderContent={
+                                <ActivityIndicator />
+                              }
+                            />
+                          </View>
+                        )}
+                        <CarDetails>
+                          <CarDescription>
+                            <View>
+                              <View>
+                                <CarTitle>
+                                  {`${year} ${make} ${model} ${trim}`}
+                                </CarTitle>
+                              </View>
+                              <View>
+                                <CarLocation>{`at ${
+                                  car.node.location.name
+                                }`}</CarLocation>
+                              </View>
+                            </View>
+                          </CarDescription>
+                          <CarPrice>
+                            <View>
+                              <Price>
+                                {
+                                  priceFormatter(car.node.pricing.filter(
+                                    data =>
+                                      data.duration === 7
+                                  )[0].value, '$')
+                                }
+                              </Price>
+                            </View>
+                          </CarPrice>
+                        </CarDetails>
+                      </CarContainer>
+                      <Divider />
                     </View>
                   );
                 })}
