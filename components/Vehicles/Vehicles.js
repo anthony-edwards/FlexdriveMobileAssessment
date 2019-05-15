@@ -3,7 +3,7 @@ import { Query } from "react-apollo";
 import { gql } from "apollo-boost";
 import { Text, View, ActivityIndicator } from "react-native";
 import styled from "styled-components";
-import { Button, Icon } from "react-native-elements";
+import { Button, Icon, Image, Divider } from "react-native-elements";
 import PageHeader from "../Layouts/Header";
 import Count from "./Count";
 import { ScrollView } from "react-native-gesture-handler";
@@ -19,6 +19,12 @@ const Container = styled.View`
   justify-content: center;
   align-self: center;
 `;
+const CarContainer = styled.View`
+  margin-top:30;
+  margin-bottom:30;
+  margin-left:10;
+  margin-right:10;
+`
 const GET_RATES = gql`
   query Vehicles($skip: Int! = 0, $take: Int! = 100) {
     vehicles(query: { skip: $skip, take: $take }) {
@@ -66,7 +72,8 @@ const Vehicles = props => {
           titleStyle={{
             color: "white",
             fontSize: 12,
-            marginRight: 10
+            marginRight: 10,
+            textAlign: 'left'
           }}
           iconRight={true}
           buttonStyle={{
@@ -95,7 +102,6 @@ const Vehicles = props => {
               </LoadContainer>
             );
           if (error) return;
-          console.log(data);
           const {vehicles} = data
           return (
             <>
@@ -103,6 +109,18 @@ const Vehicles = props => {
                 {vehicles.edges.map(car => {
                   return (
                     <View key={car.node.id}>
+                    <CarContainer key={car.node.id}>
+                      {car.node.featureImage &&
+                        <View>
+                        <Image
+                          source={{ uri: car.node.featureImage.url }}
+                          style={{ width: '100%', height: 200 }}
+                          PlaceholderContent={
+                            <ActivityIndicator />
+                          }
+                        />
+                      </View>
+                      }
                       <View>
                         <Text>{car.node.make}</Text>
                       </View>
@@ -115,6 +133,8 @@ const Vehicles = props => {
                       <View>
                         <Text>{car.node.trim}</Text>
                       </View>
+                    </CarContainer>
+                    <Divider/>
                     </View>
                   );
                 })}
@@ -123,7 +143,6 @@ const Vehicles = props => {
           );
         }}
       </Query>
-      <Count />
     </>
   );
 };
