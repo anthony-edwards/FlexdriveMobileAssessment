@@ -11,15 +11,30 @@ import { ApolloProvider } from "react-apollo";
 import { client } from "./Client";
 import { Provider } from "react-redux";
 import store from "./redux/store";
-import FlexDriveHeader from "./components/Header";
-import Vehicles from "./components/Vehicles";
+import { createStackNavigator, createAppContainer } from "react-navigation";
+import FlexDriveHeader from "./components/Layouts/Header";
+import VehiclesPage from "./components/Vehicles/Vehicles";
+import LandingPage from "./components/Home/Home";
+
+let Router = createStackNavigator(
+  {
+    Landing: LandingPage,
+    Vehicles: VehiclesPage
+  },
+  { headerMode: "none" },
+  {
+    initialRouteName: "Landing",
+    header: null
+  }
+);
+
+Router = createAppContainer(Router);
 
 //Stateless components are better :)
 export default (App = () => (
   <Provider store={store}>
     <ApolloProvider client={client}>
-      <FlexDriveHeader />
-      <Vehicles />
+      <Router />
     </ApolloProvider>
   </Provider>
 ));

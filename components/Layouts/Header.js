@@ -12,20 +12,28 @@ const FlexDriveHeader = props => (
     />
   </View>
 );
-const HeaderLeftComponent = () => (
-  <>
-    <Button
-      color="black"
-      type="clear"
-      buttonStyle={{
-        backgroundColor: "white"
-      }}
-      icon={
-        <Icon name="chevron-left" type="font-awesome" size={15} color="black" />
-      }
-    />
-  </>
-);
+const HeaderLeftComponent = (props) => {
+  const { navigate } = props.navigation;
+  return (
+    <>
+      <Button
+        onPress={() => navigate("Landing")}
+        color="black"
+        type="clear"
+        buttonStyle={{
+          backgroundColor: "white"
+        }}
+        icon={
+          <Icon
+            name="chevron-left"
+            type="font-awesome"
+            size={15}
+            color="black"
+          />
+        }
+      />
+    </>
+  );};
 
 const HeaderCenterComponent = props => (
   <>
@@ -65,24 +73,25 @@ const HeaderCenterComponent = props => (
   </>
 );
 
-const HeaderRightComponent = (props) => (
-  <>
-    <Button
-      color="black"
-      type="outline"
-      buttonStyle={{
-        backgroundColor: "white",
-        borderColor: "black"
-      }}
-      icon={<Icon name="sliders" type="font-awesome" size={15} color="black" />}
-      title="Filters"
-      titleStyle={{ color: "black", marginLeft: 10, fontSize: 14 }}
-      // onPress={(e)=>
-      // }
-    />
-  </>
-);
+const HeaderRightComponent = (props) => {
 
+  return (
+    <>
+      <Button
+        color="black"
+        type="outline"
+        buttonStyle={{
+          backgroundColor: "white",
+          borderColor: "black"
+        }}
+        icon={
+          <Icon name="sliders" type="font-awesome" size={15} color="black" />
+        }
+        title="Filters"
+        titleStyle={{ color: "black", marginLeft: 10, fontSize: 14 }}
+      />
+    </>
+  );};
 const styles = StyleSheet.create({
   header: {
     flex: 1,
