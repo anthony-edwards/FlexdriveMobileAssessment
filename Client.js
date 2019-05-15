@@ -1,5 +1,7 @@
 import ApolloClient from "apollo-boost";
 import { gql } from "apollo-boost";
+import { InMemoryCache } from "apollo-cache-inmemory";
+import { HttpLink } from "apollo-link-http";
 const client = new ApolloClient({
   uri: `https://graph.qa.f1.flexdrive.com/`
 });
