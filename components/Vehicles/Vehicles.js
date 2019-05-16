@@ -3,10 +3,18 @@ import { Query } from "react-apollo";
 import { gql } from "apollo-boost";
 import { Text, View, ActivityIndicator } from "react-native";
 import styled from "styled-components";
-import { Button, Icon, Image, Divider } from "react-native-elements";
+import {
+  Button,
+  Icon,
+  Image,
+  Divider,
+  Badge,
+  withBadge
+} from "react-native-elements";
 import PageHeader from "../Layouts/Header";
 import Count from "./Count";
 import { ScrollView } from "react-native-gesture-handler";
+import { white } from "ansi-colors";
 const priceFormatter = (n, currency)=>{
   return currency + n.toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g, "$1,");
 }
@@ -153,7 +161,7 @@ const Vehicles = props => {
             <>
               <ScrollView>
                 {vehicles.edges.map(car => {
-                  let {year, make, model, trim} = car.node
+                  let {year, make, model, trim, rideshareEligible} = car.node
                   return (
                     <View key={car.node.id}>
                       <CarContainer key={car.node.id}>
@@ -171,6 +179,25 @@ const Vehicles = props => {
                                 <ActivityIndicator />
                               }
                             />
+                            {rideshareEligible &&
+                            <Badge
+                              status="success"
+                              textStyle={{
+                                color: 'white'
+                              }}
+                              badgeStyle={{
+                                color: 'white',
+                                backgroundColor: "purple",
+                                borderRadius: 0,
+                              }}
+                              value={`RIDESHARE`}
+                              containerStyle={{
+                                color: 'white',
+                                position: "absolute",
+                                bottom: 10,
+                                left: 0
+                              }}
+                            />}
                           </View>
                         )}
                         <CarDetails>
@@ -178,7 +205,13 @@ const Vehicles = props => {
                             <View>
                               <View>
                                 <CarTitle>
-                                  {`${cleanString(year)} ${cleanString(make)} ${cleanString(model)} ${cleanString(trim)}`}
+                                  {`${cleanString(
+                                    year
+                                  )} ${cleanString(
+                                    make
+                                  )} ${cleanString(
+                                    model
+                                  )} ${cleanString(trim)}`}
                                 </CarTitle>
                               </View>
                               <View>
@@ -191,15 +224,18 @@ const Vehicles = props => {
                           <CarPrice>
                             <View>
                               <Price>
-                                {
-                                  priceFormatter(car.node.pricing.filter(
+                                {priceFormatter(
+                                  car.node.pricing.filter(
                                     data =>
                                       data.duration === 7
-                                  )[0].value, '$')
-                                }
+                                  )[0].value,
+                                  "$"
+                                )}
                               </Price>
                               <Time>
-                                {`FOR ${car.node.pricing[0].duration} DAYS`}
+                                {`FOR ${
+                                  car.node.pricing[0].duration
+                                } DAYS`}
                               </Time>
                             </View>
                           </CarPrice>
