@@ -50,6 +50,7 @@ client
     query
   })
   .then(result => {
+    console.log(result);
     cache.writeData({
       data: {
         count: result.data.vehicles.totalCount

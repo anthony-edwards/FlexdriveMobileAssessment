@@ -2,19 +2,20 @@ import React from "react";
 import { StyleSheet, Text, View } from "react-native";
 import { Icon, Header, Button } from "react-native-elements";
 import Count from "../Vehicles/Count";
+import FilterResults from "./Filter";
 
 const FlexDriveHeader = props => (
   <View>
     <Header
       leftComponent={<HeaderLeftComponent {...props} />}
       centerComponent={<HeaderCenterComponent {...props} />}
-      rightComponent={<HeaderRightComponent {...props}/>}
+      rightComponent={<HeaderRightComponent {...props} />}
       backgroundColor={"white"}
     />
   </View>
 );
 
-const HeaderLeftComponent = (props) => {
+const HeaderLeftComponent = props => {
   const { navigate } = props.navigation;
   return (
     <>
@@ -35,7 +36,8 @@ const HeaderLeftComponent = (props) => {
         }
       />
     </>
-  );};
+  );
+};
 
 const HeaderCenterComponent = props => (
   <>
@@ -47,8 +49,8 @@ const HeaderCenterComponent = props => (
       }}
     >
       <View>
-        <Text style={{marginRight: 5}}>
-          <Count/>
+        <Text style={{ marginRight: 5 }}>
+          <Count />
         </Text>
       </View>
       <View>
@@ -77,32 +79,12 @@ const HeaderCenterComponent = props => (
   </>
 );
 
-const HeaderRightComponent = (props) => {
-
+const HeaderRightComponent = props => {
   return (
     <>
-      <Button
-        color="black"
-        type="outline"
-        buttonStyle={{
-          backgroundColor: "white",
-          borderColor: "black"
-        }}
-        icon={
-          <Icon name="sliders" type="font-awesome" size={15} color="black" />
-        }
-        title="Filters"
-        titleStyle={{ color: "black", marginLeft: 10, fontSize: 14 }}
-      />
+      <FilterResults />
     </>
-  );};
-const styles = StyleSheet.create({
-  header: {
-    flex: 1,
-    flexDirection: "row",
-    top: 50,
-    marginLeft: 15
-  }
-});
+  );
+};
 
 export default FlexDriveHeader;
